@@ -1,0 +1,20 @@
+package StudentManagementSystem;
+
+import java.util.ArrayList;
+
+public class StudentDatabase {
+
+    private ArrayList<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public ArrayList<Student> listStudents() {
+        return students;
+    }
+
+    public int getTotalStudents() {
+        return students.size();
+    }
+}
