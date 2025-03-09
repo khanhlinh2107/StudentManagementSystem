@@ -1,0 +1,153 @@
+package StudentManagementSystem;
+
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class StudentManagementSystem {
+
+    private static StudentDatabase studentDatabase = new StudentDatabase();
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Student Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(700, 350);
+        frame.setLayout(new FlowLayout());
+
+        
+        JButton addStudentBtn = new JButton("Add Student");
+        JButton listStudentBtn = new JButton("List Student");
+        JButton totalStudentBtn = new JButton("Total Student");
+        JButton dateOfBirthBtn = new JButton("Date of Birth");
+        JButton homeTownBtn = new JButton("Home Town");
+        JButton gpaBtn = new JButton("GPA");
+        JButton majorBtn = new JButton("Major");
+
+        
+        frame.add(addStudentBtn);
+        frame.add(listStudentBtn);
+        frame.add(totalStudentBtn);
+        frame.add(dateOfBirthBtn);
+        frame.add(homeTownBtn);
+        frame.add(gpaBtn);
+        frame.add(majorBtn);
+
+        frame.setVisible(true);
+
+        
+        addStudentBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String name = JOptionPane.showInputDialog("Enter Student Name:");
+                String studentId = JOptionPane.showInputDialog("Enter Student ID:");
+                String dateOfBirth = JOptionPane.showInputDialog("Enter Date of Birth (YYYY-MM-DD):");
+                String homeTown = JOptionPane.showInputDialog("Enter Home Town:");
+                String gpaStr = JOptionPane.showInputDialog("Enter GPA:");
+                String major = JOptionPane.showInputDialog("Enter Major:");
+
+                try {
+                    double gpa = Double.parseDouble(gpaStr); 
+                    if (!name.isEmpty() && !studentId.isEmpty() && !dateOfBirth.isEmpty() && !homeTown.isEmpty() && !major.isEmpty()) {
+                        studentDatabase.addStudent(new Student(name, studentId, dateOfBirth, homeTown, gpa, major));
+                        JOptionPane.showMessageDialog(frame, "Student added successfully.");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Invalid input! Please enter valid details.");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Invalid GPA! Please enter a valid number.");
+                }
+            }
+        });
+
+        
+        listStudentBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Student> students = studentDatabase.listStudents();
+                if (students.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "No students found.");
+                } else {
+                    StringBuilder message = new StringBuilder("List of Students:\n");
+                    for (Student student : students) {
+                        message.append("ID: ").append(student.getStudentId())
+                                .append(", Name: ").append(student.getName())
+                                .append(", DOB: ").append(student.getDateOfBirth())
+                                .append(", Hometown: ").append(student.getHomeTown())
+                                .append(", GPA: ").append(student.getGpa())
+                                .append(", Major: ").append(student.getMajor())
+                                .append("\n");
+                    }
+                    JOptionPane.showMessageDialog(frame, message.toString());
+                }
+            }
+        });
+
+        
+        totalStudentBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int totalStudents = studentDatabase.getTotalStudents();
+                JOptionPane.showMessageDialog(frame, "Total students: " + totalStudents);
+            }
+        });
+
+        
+        dateOfBirthBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Student> students = studentDatabase.listStudents();
+                StringBuilder message = new StringBuilder("Date of Birth List:\n");
+                for (Student student : students) {
+                    message.append("ID: ").append(student.getStudentId())
+                            .append(", Name: ").append(student.getName())
+                            .append(", DOB: ").append(student.getDateOfBirth())
+                            .append("\n");
+                }
+                JOptionPane.showMessageDialog(frame, message.toString());
+            }
+        });
+
+        
+        homeTownBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Student> students = studentDatabase.listStudents();
+                StringBuilder message = new StringBuilder("Home Town List:\n");
+                for (Student student : students) {
+                    message.append("ID: ").append(student.getStudentId())
+                            .append(", Name: ").append(student.getName())
+                            .append(", Home Town: ").append(student.getHomeTown())
+                            .append("\n");
+                }
+                JOptionPane.showMessageDialog(frame, message.toString());
+            }
+        });
+
+        
+        gpaBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Student> students = studentDatabase.listStudents();
+                StringBuilder message = new StringBuilder("GPA List:\n");
+                for (Student student : students) {
+                    message.append("ID: ").append(student.getStudentId())
+                            .append(", Name: ").append(student.getName())
+                            .append(", GPA: ").append(student.getGpa())
+                            .append("\n");
+                }
+                JOptionPane.showMessageDialog(frame, message.toString());
+            }
+        });
+
+        
+        majorBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Student> students = studentDatabase.listStudents();
+                StringBuilder message = new StringBuilder("Major List:\n");
+                for (Student student : students) {
+                    message.append("ID: ").append(student.getStudentId())
+                            .append(", Name: ").append(student.getName())
+                            .append(", Major: ").append(student.getMajor())
+                            .append("\n");
+                }
+                JOptionPane.showMessageDialog(frame, message.toString());
+            }
+        });
+    }
+}
